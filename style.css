@@ -1,0 +1,25 @@
+* {
+    background-color: beige;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+}
+
+h1 {
+    align-self: center;
+}
+
+p {
+    align-self: center
+}
+
+#myCanvas {
+    background-color: white;
+    border: 1pt black solid;
+    height: 400px;
+    width: 600px;
+    align-self: center;
+  }
