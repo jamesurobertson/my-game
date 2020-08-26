@@ -48,16 +48,18 @@ function drawtarget() {
 
 function drawScores(players) {
     let start = 20
-    ctx.font = "15px Helvetica";
+    ctx.font = "17px Helvetica";
     ctx.fillStyle = "black";
-    ctx.fillText("Scores", 530, start);
-    start += 15
+    ctx.fillText("Leaderboard", 490, start);
+    start += 25
+    let i = 1
     for (let id in players) {
         const player = players[id]
         ctx.font = "15px Helvetica";
         ctx.fillStyle = socket.id === id ? "blue" : "red"
-        ctx.fillText(player.score, 530, start);
+        ctx.fillText(`${i}. ` + player.score, 480, start);
         start += 15
+        i++
     }
 }
 

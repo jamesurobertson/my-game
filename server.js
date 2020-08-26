@@ -29,8 +29,12 @@ io.on("connection", (socket) => {
     };
     io.emit("state", players);
   });
+
+  const lastUpdatedTime = (new Date()).getTime()
   socket.on("movement", (data) => {
     const player = players[socket.id] || {};
+    const currentTime = (new Date()).getTime()
+    const timeDiff = currentTime - lastUpdatedTime
     if (data.left) player.x -= 4;
     if (data.right) player.x += 4;
     if (data.up) player.y -= 4;
@@ -55,4 +59,4 @@ io.on("connection", (socket) => {
   }
 });
 
-http.listen(5000, () => console.log("Listening on port 5000..."));
+http.listen(process.env.PORT || 5000, () => console.log("Server is running..."));
