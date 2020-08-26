@@ -10,39 +10,49 @@ app.get("/", (req, res) => {
 });
 
 const players = {};
+const target = { x: 0, y: 0 };
 io.on("connection", (socket) => {
-  console.log("user connected");
+  let [canvasWidth, canvasHeight] = [600, 400];
+
   socket.on("disconnect", () => {
     delete players[socket.id];
-    console.log("user disconnected");
     io.emit("state", players);
   });
 
-  io.on("connection", (socket) => {
-    socket.on("new player", (data) => {
-      players[socket.id] = {
-        x: data.x,
-        y: data.y,
-      };
-      io.emit("state", players);
-    });
-    socket.on("movement", (data) => {
-      const player = players[socket.id] || {};
-      if (data.left) player.x -= 2;
-      if (data.right) player.x += 2;
-      if (data.up) player.y -= 2;
-      if (data.down) player.y += 2;
-      io.emit("state", players);
-    });
-
-    socket.on("collision", (data) => {
-      const player = players[socket.id] || {};
-      console.log(player);
-      player.x = data.x;
-      player.y = data.y;
-      io.emit("state", players);
-    });
+  socket.on("new player", (data) => {
+    target.x = data.targetX;
+    target.y = data.targetY;
+    players[socket.id] = {
+      x: data.x,
+      y: data.y,
+      score: 0
+    };
+    io.emit("state", players);
   });
+  socket.on("movement", (data) => {
+    const player = players[socket.id] || {};
+    if (data.left) player.x -= 4;
+    if (data.right) player.x += 4;
+    if (data.up) player.y -= 4;
+    if (data.down) player.y += 4;
+    if (player.x > canvasWidth) player.x = 0;
+    if (player.x < 0) player.x = canvasWidth;
+    if (player.y > canvasHeight) player.y = 0;
+    if (player.y < 0) player.y = canvasHeight;
+    detectCollision(player, target);
+    io.emit("state", players, target);
+  });
+
+  function detectCollision(player, target) {
+    const xc = player.x - target.x;
+    const yc = player.y - target.y;
+    const distance = Math.sqrt(xc * xc + yc * yc);
+    if (distance < 10 + 10) {
+      target.x = Math.floor(Math.random() * 370) + 10;
+      target.y = Math.floor(Math.random() * 390) + 10;
+      player.score++
+    }
+  }
 });
 
 http.listen(5000, () => console.log("Listening on port 5000..."));
