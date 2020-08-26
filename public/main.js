@@ -29,7 +29,7 @@ function keyHandler(event, bool) {
 socket.emit("new player", { x: Math.random() * canvas.width, y: Math.random() *canvas.height, targetX, targetY});
 setInterval(() => socket.emit("movement", keys), 1000 / 60);
 
-function drawPlayer(x, y) {
+function drawPlayer(x, y, id) {
   ctx.beginPath();
   ctx.arc(x, y, playerRadius, 0, Math.PI * 2);
   ctx.fillStyle = socket.id === id ? "blue" : "red"
@@ -71,11 +71,10 @@ socket.on("state", (players, target) => {
   clearCanvas();
   for (let id in players) {
     const player = players[id];
-    drawPlayer(player.x, player.y);
+    drawPlayer(player.x, player.y, id);
   }
   if (target) targetX = target.x
   if (target) targetY = target.y
   drawScores(players)
-  drawPlayer();
   drawtarget();
 });
