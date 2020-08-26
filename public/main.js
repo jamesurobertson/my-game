@@ -32,7 +32,7 @@ setInterval(() => socket.emit("movement", keys), 1000 / 60);
 function drawPlayer(x, y) {
   ctx.beginPath();
   ctx.arc(x, y, playerRadius, 0, Math.PI * 2);
-  ctx.fillStyle = "blue";
+  ctx.fillStyle = socket.id === id ? "blue" : "red"
   ctx.fill();
   ctx.closePath();
 }
