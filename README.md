@@ -1,12 +1,13 @@
 # Chase
-To learn more about web sockets and the canvas element, I created this simple browser game. PR's welcome
+
+To learn more about web sockets and the canvas element, I created this simple browser game. PR's welcome.
 
 [Live Site](https://chase-game.herokuapp.com)
 
 
 ## Initialize build
 
-Make sure you installed all deps:
+Make sure you installed all dependencies:
 
     $ npm install
 
