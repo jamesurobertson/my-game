@@ -2,7 +2,6 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 const socket = io();
 
-
 const playerRadius = 10;
 
 //initial Target details
@@ -18,7 +17,6 @@ socket.emit("new player", {
   targetY,
 });
 
-
 // player movement mapping
 const keys = {
   left: false,
@@ -30,13 +28,12 @@ const keys = {
 document.addEventListener("keyup", (event) => keyHandler(event, false));
 document.addEventListener("keydown", (event) => keyHandler(event, true));
 
-
 // key presses update key movement
 function keyHandler(event, bool) {
-    const kc = event.keyCode;
+  const kc = event.keyCode;
 
-    if (kc === 37) keys.left = bool;
-    if (kc === 38) keys.up = bool;
+  if (kc === 37) keys.left = bool;
+  if (kc === 38) keys.up = bool;
   if (kc === 39) keys.right = bool;
   if (kc === 40) keys.down = bool;
 }
@@ -46,15 +43,14 @@ function keyHandler(event, bool) {
 setInterval(() => socket.emit("movement", keys), 1000 / 60);
 
 function drawPlayer(player) {
-    ctx.beginPath();
-    ctx.arc(player.x, player.y, playerRadius, 0, Math.PI * 2);
+  ctx.beginPath();
+  ctx.arc(player.x, player.y, playerRadius, 0, Math.PI * 2);
   ctx.fillStyle = player.color;
   ctx.fill();
   ctx.closePath();
 }
 
 function drawtarget(target) {
-  if (!target) return;
   ctx.beginPath();
   ctx.arc(target.x, target.y, targetRadius, 0, Math.PI * 2);
   ctx.fillStyle = "black";
@@ -63,8 +59,6 @@ function drawtarget(target) {
 }
 
 function drawScores(players) {
-  if (!players) return;
-
   // x index of where the leaderboard starts drawing
   let start = 20;
 
@@ -109,10 +103,9 @@ function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-
-
 // Canvas Refreshing when receiving updated state'
 socket.on("state", (players, target) => {
+  if (!players || !target) return;
   clearCanvas();
   for (let id in players) {
     const player = players[id];

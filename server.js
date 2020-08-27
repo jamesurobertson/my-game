@@ -3,7 +3,6 @@ const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const colors = require('./colors')
-
 app.use(express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => {
@@ -11,12 +10,13 @@ app.get("/", (req, res) => {
 });
 
 // players and target objects
+let canvasWidth = 600
+let canvasHeight = 400
+
 const players = {};
-const target = { x: 0, y: 0 };
+const target = { x: canvasWidth/2, y: canvasHeight/2 };
 
 io.on("connection", (socket) => {
-  let canvasWidth = 600
-  let canvasHeight = 400
 
   socket.on("disconnect", () => {
     delete players[socket.id];
