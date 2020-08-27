@@ -24,8 +24,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("new player", (data) => {
-    target.x = data.targetX;
-    target.y = data.targetY;
     players[socket.id] = {
       x: data.x,
       y: data.y,

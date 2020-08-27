@@ -5,16 +5,12 @@ const socket = io();
 const playerRadius = 10;
 
 //initial Target details
-let targetX = canvas.width / 2;
-let targetY = canvas.height / 2;
 const targetRadius = 10;
 
 // when there is a new connection emit new player
 socket.emit("new player", {
   x: Math.random() * canvas.width,
   y: Math.random() * canvas.height,
-  targetX,
-  targetY,
 });
 
 // player movement mapping
@@ -88,8 +84,11 @@ function drawScores(players) {
 
   // if activePlayer isn't on leaderboard, show their score
   const activePlayer = players[socket.id];
+  if (!activePlayer) return;
   if (!playersArr.slice(0, 5).includes(activePlayer)) {
     ctx.font = "15px Helvetica";
+    console.log(`yooo`, activePlayer, socket.id);
+    console.log("yeeee", players);
     ctx.fillStyle = activePlayer.color;
     ctx.fillText(
       `${playersArr.indexOf(activePlayer) + 1}. ` + activePlayer.score,
