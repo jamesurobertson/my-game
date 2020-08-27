@@ -1,25 +1,31 @@
 * {
     background-color: beige;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
 
 }
 
 h1 {
-    align-self: center;
-}
-
-p {
-    align-self: center
+    margin-top: 55px;
 }
 
 #myCanvas {
     background-color: white;
-    border: 1pt black solid;
+    border: 1pt #2f2f2f solid;
     height: 400px;
     width: 600px;
-    align-self: center;
+    margin-top: 10px;
   }
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    padding: 5px;
+}
