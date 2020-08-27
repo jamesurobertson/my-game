@@ -51,15 +51,27 @@ function drawScores(players) {
     ctx.font = "17px Helvetica";
     ctx.fillStyle = "black";
     ctx.fillText("Leaderboard", 490, start);
+    if (!players) return
     start += 25
-    let i = 1
+    let playersArr = []
     for (let id in players) {
-        const player = players[id]
+        playersArr.push(players[id])
+    }
+
+    playersArr.sort((a, b) => b.score - a.score)
+    const len = playersArr.length > 5 ? 5 : playersArr.length
+    playersArr.slice(0, len).forEach((player, i) => {
         ctx.font = "15px Helvetica";
         ctx.fillStyle = player.color
-        ctx.fillText(`${i}. ` + player.score, 480, start);
+        ctx.fillText(`${i + 1}. ` + player.score, 480, start);
         start += 15
-        i++
+    })
+
+    const activePlayer = players[socket.id]
+    if (!playersArr.slice(0, 5).includes(activePlayer)) {
+        ctx.font = "15px Helvetica";
+        ctx.fillStyle = activePlayer.color
+        ctx.fillText(`${playersArr.indexOf(activePlayer) + 1}. ` + activePlayer.score, 480, start);
     }
 }
 
