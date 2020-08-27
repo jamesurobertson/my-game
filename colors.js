@@ -1,4 +1,4 @@
-export default const colors = [
+const colors = [
     "Navy",
     "MediumBlue",
     "Blue",
@@ -97,3 +97,6 @@ export default const colors = [
     "DarkSalmon",
     "Violet",
   ];
+
+
+  export default colors
