@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/jamesurobertson/my-game#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "nodemon": "^2.0.4",
     "path": "^0.12.7",
     "socket.io": "^2.4.0"
